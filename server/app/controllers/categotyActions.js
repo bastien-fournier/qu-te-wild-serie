@@ -1,3 +1,4 @@
+const tables = require("../../database/tables");
 // Some data to make the trick
 
 const categories = [
@@ -14,18 +15,23 @@ const categories = [
 // Declare the actions
 
 /* Here you code */
+const browse = async (req, res) => {
+  const categoriesFromDB = await tables.category.readAll();
 
-const browse = (req, res) => {
-  if (req.query.q != null) {
-    const filteredPrograms = categories.filter((program) =>
-      program.synopsis.includes(req.query.q)
-    );
-
-    res.json(filteredPrograms);
-  } else {
-    res.json(categories);
-  }
+  res.json(categoriesFromDB);
 };
+
+// const browse = (req, res) => {
+//   if (req.query.q != null) {
+//     const filteredPrograms = categories.filter((program) =>
+//       program.synopsis.includes(req.query.q)
+//     );
+
+//     res.json(filteredPrograms);
+//   } else {
+//     res.json(categories);
+//   }
+// };
 
 const read = (req, res) => {
   const parsedId = parseInt(req.params.id, 10);
